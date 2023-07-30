@@ -1,0 +1,32 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": "Piano Song",
+    "description": "Song for auto piano player.",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "The name of the song.",
+            "type": "string"
+        },
+        "description": {
+            "description": "The description of the song.",
+            "type": "string"
+        },
+        "copyright": {
+            "description": "The copyright of the song.",
+            "type": "string"
+        },
+        "url": {
+            "description": "Link to the original song url.",
+            "type": "string"
+        },
+        "comment": {
+            "description": "Comment on the song.",
+            "type": "string"
+        },
+        "sheet": {
+            "$ref": "data_sheet.json"
+        }
+    },
+    "required": [ "sheet" ]
+}

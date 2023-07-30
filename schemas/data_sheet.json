@@ -1,0 +1,42 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+        "delay": {
+            "description": "Delay values for sheet string, all values are in milliseconds.",
+            "type": "object",
+            "properties": {
+                "key": {
+                    "description": "Delay that is applied after every key.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "default": 200
+                },
+                "space": {
+                    "description": "Delay that is applied on a space outside brackets \" \".",
+                    "type": "integer",
+                    "minimum": 0,
+                    "default": 200
+                },
+                "pause": {
+                    "description": "Delay that is applied after a break \"|\".",
+                    "type": "integer",
+                    "minimum": 0,
+                    "default": 400
+                },
+                "fast": {
+                    "description": "Delay that is applied on a space inside brackets \"[ ]\".",
+                    "type": "integer",
+                    "minimum": 0,
+                    "default": 50
+                }
+            }
+        },
+        "string": {
+            "description": "The song sheet music, must have no newlines or unknown piano characters.",
+            "type": "string",
+            "pattern": "^[1234567890qwertyuiopasdfghjklzxcvbnm!@$%^*\\(QWETYIOPSDGHJLZCVB |\\[\\]]*$"
+        }
+    },
+    "required": [ "delay", "string" ]
+}
