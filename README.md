@@ -19,6 +19,6 @@ Inside `target/debug/auto_piano_player.exe` drag a song file onto the executable
 
 The song schema is inside `schema/piano_song.json`
 
-Some sample songs are inside `songs/`;
+Some sample songs are inside `songs/`
 
 
