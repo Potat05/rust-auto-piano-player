@@ -1,0 +1,13 @@
+{
+    "$schema": "../schemas/piano_song.json",
+    "name": "Your Reality (Doki Doki Literature Club)",
+    "url": "https://virtualpiano.net/music-sheet/your-reality-doki-doki-literature-club-expert-dan-salvato/",
+    "sheet": {
+        "delay": {
+            "key": 150,
+            "space": 150,
+            "pause": 300
+        },
+        "string": "t [uo] v [vtq] [ve] [ut]| [ve0]c[xq] [te]cv [xq8] [zw] [yr] l [zw9] [xt] [uol] h [tq] e [ut]| [e0] [sqpo] [te]| [q8] [woda] [yr] 5 [w9] [yutso81]| [wuso] [e81] [t6]| [wuso] [86] [ytqi4] [q4] [spi] [ywto5]||[ywro9]ew [yuo81]| [wt] [wute81] 6| [te0] 6 [wtqie4] [q4] [te] [ywre5]||[ywr9]| [81]| [vuso] [v81] [v6]| [uso] [v6]c[xq4] [q4]c[vspi] [xw5] z| [yola] [z9] [x81] l [usoh] [v81]b[v6] vb[vuso] [m6] [q4] [q4] [spli] [j5]k hj [yoka9] h [81]| [vuso] [b81] [v6]| [uso] [x6]c[vq4] [qc4]x[zspi] [wj5] h| [yoga] [j9] [h81] x [usol] [v81]b[v6] vb[vuso] [m6] [q4] [q4] [zspi] [b5]n bn [yoma9]| [yutso81] hh[wuto] [he8] [t6] g [wuso] [fe6] [ytsqi4] [qS4]d[spi] [ywtof]g[w5] Gh[ywroa9]ew [yuo81] j [wth]f[81]s6| [toe0] [p6]s[wtqie4] [qp] [tse]d[ywso5]||[ywra7]| [yutso81] hh[wuto] [he8] [t6] g [wuso] [fe6] [ytsqi4] [qS4]d[spi] [ywtof]g[w5] Gh[ywroa9]ew [yuo81] j [wth]f[81]s6| [toe0] [p6]s[wtqie4] [qp] [tse]d[ywso5]||[ywra7]| [v81] l [zusoh] [lh81] 6v l[zuso] [l6] [wv4] [ql4] [zspif] [wlg5] vhl[zyoa] [lh9] [v81] l [zuso] [l81] 6v l[zuso] [l6] [vql4] [ql4] [zspid] [xl5] v l[zyoa9] [lh] [v81] l [zuso] [l81] 6v l[zuso] [l6] [qg4] [qh4]j[spih]f[w5]d apo[yoa]s[f9] [gd81] [sf][uso] [so81] 6[uo] [uso]a[f6] [qpd4] [q4] [spi] 5||[yoa9]| [81]| h [h81] [h6]||[h6]g[qf4] [q4]g[spih] [wf5] d| [ysoa] [d9] [v81] x [usoc] [z81] [x6] l [zuso] [j6] [qh4] [qf4] [spig]hb5 v| [yoa9]| [81]| [usoh] [j81] [h6]| [uso] [f6]g[qh4] [qg4]f[spid] [wp5] o| [yoia] [p9] [v81] x [usoc] [z81] [x6] l [zuso] [j6] [cV@(] [vZ@(] [zc] [lZ4] [zg] [lf] [JD8] [pj] [qg4] [qj4] [spi] l [wh5] [wk5] [yoa] z [qg4]h[qj4] [spji]hj [wk5]h[wj5]L[yvoa] [w5] [yutso81] hh[wuto] [he8] [t6] g [wuso] [fe6] [ytsqi4] [qS4]d[spi] [ywtof]g[w5] Gh[ywroa9]ew [yuo81] j [wth]f[81]d6| [toe0] [p6]s[wtqie4] [qp] [tse]d[ywso5]||[ywra7]| [yutso81] hh[wuto] [he8] [t6] g [wuso] [fe6] [ytsqi4] [qS4]d[ypi] [ywtof]g[w5] Gh[ywroa9]ew [yuo81] j [wth]f[81]d6| [toe0] [p6]s[wtqie4] [qp] [tse]d[ywso5]||[ywro7] [p6]s[wtie4] [qp] [tse]d[ywso5]| f [ywr7] g [g81] fs[uo] [p81]s6 h [uso] 6 [yie]||[tie]| |[yie]||[wut]"
+    }
+}
