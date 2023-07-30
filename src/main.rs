@@ -64,6 +64,7 @@ fn main() -> ExitCode {
             println!("Started.");
 
             let mut is_in_bracket = false;
+            let mut num_key_bracket = 0;
 
             for char in string.chars().into_iter() {
 
@@ -81,14 +82,18 @@ fn main() -> ExitCode {
                     '|' => {
                         std::thread::sleep(Duration::from_millis(delay_pause));
                     }
-                    '[' => { is_in_bracket = true; }
+                    '[' => {
+                        is_in_bracket = true;
+                        num_key_bracket = 0;
+                    }
                     ']' => {
                         is_in_bracket = false;
                         // TODO - It is assumed that a key is played inside this, don't assume anything.
-                        std::thread::sleep(Duration::from_millis(delay_key - 15));
+                        std::thread::sleep(Duration::from_millis(delay_key - 15 * num_key_bracket));
                     }
                     ' ' => {
                         if is_in_bracket {
+                            num_key_bracket = 0;
                             std::thread::sleep(Duration::from_millis(delay_fast));
                         } else if delay_space > 0 {
                             std::thread::sleep(Duration::from_millis(delay_space));
@@ -98,6 +103,8 @@ fn main() -> ExitCode {
                         Key::new_from_key(char).press();
                         if !is_in_bracket {
                             std::thread::sleep(Duration::from_millis(delay_key - 15));
+                        } else {
+                            num_key_bracket += 1;
                         }
                     }
                 }
