@@ -36,6 +36,12 @@ fn main() -> ExitCode {
     if song.description.is_some() {
         println!("{}", song.description.unwrap());
     }
+
+
+
+    let mut r#macro: Macro = sheet_to_macro(song.sheet);
+
+    println!("Duration {}s", r#macro.estimate_time() / 1000);
     
 
 
@@ -48,7 +54,6 @@ fn main() -> ExitCode {
 
 
 
-    let mut r#macro: Macro = sheet_to_macro(song.sheet);
 
 
 
@@ -98,6 +103,7 @@ fn main() -> ExitCode {
         }
 
         std::thread::sleep(Duration::from_millis(10));
+        
     }
 
 

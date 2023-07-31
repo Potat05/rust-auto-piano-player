@@ -123,5 +123,20 @@ impl Macro {
         
     }
 
+
+
+    pub fn estimate_time(&mut self) -> u64 {
+        let mut max: u64 = 0;
+        for event in self.events.iter() {
+            match event.r#type {
+                EventType::Delay => {
+                    max += event.value as u64;
+                }
+                _ => {}
+            }
+        }
+        max
+    }
+
 }
 
