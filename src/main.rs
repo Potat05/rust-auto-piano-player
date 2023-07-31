@@ -1,12 +1,12 @@
 mod paino;
 mod song;
+mod r#macro;
+mod sheet;
 
 use std::{process::ExitCode, time::Duration, fs};
 use mki::Keyboard;
-use paino::Key;
-use serde_json::{self, Number};
 
-use crate::song::Song;
+use crate::{song::Song, sheet::sheet_to_macro, r#macro::Macro};
 
 
 
@@ -33,16 +33,6 @@ fn main() -> ExitCode {
         println!("{}", song.description.unwrap());
     }
     
-    let sheet = song.sheet;
-    
-    let delay = sheet.delay;
-    let delay_key = delay.key.unwrap_or(Number::from(200)).as_u64().unwrap();
-    let delay_space = delay.space.unwrap_or(Number::from(200)).as_u64().unwrap();
-    let delay_pause = delay.pause.unwrap_or(Number::from(400)).as_u64().unwrap();
-    let delay_fast = delay.fast.unwrap_or(Number::from(50)).as_u64().unwrap();
-
-    let string = sheet.string;
-
 
 
     println!();
@@ -50,6 +40,10 @@ fn main() -> ExitCode {
     println!("NUMPAD1 = Start playing song.");
     println!("NUMPAD2 = Stop playing song.");
     println!();
+
+
+
+    let mut r#macro: Macro = sheet_to_macro(song.sheet);
 
 
 
@@ -63,10 +57,7 @@ fn main() -> ExitCode {
 
             println!("Started.");
 
-            let mut is_in_bracket = false;
-            let mut num_key_bracket = 0;
-
-            for char in string.chars().into_iter() {
+            while !r#macro.finished() {
 
                 if Keyboard::is_pressed(&Keyboard::Numpad0) {
                     println!("Exiting.");
@@ -78,35 +69,8 @@ fn main() -> ExitCode {
                     continue 'mainloop;
                 }
 
-                match char {
-                    '|' => {
-                        std::thread::sleep(Duration::from_millis(delay_pause));
-                    }
-                    '[' => {
-                        is_in_bracket = true;
-                        num_key_bracket = 0;
-                    }
-                    ']' => {
-                        is_in_bracket = false;
-                        // TODO - It is assumed that a key is played inside this, don't assume anything.
-                        std::thread::sleep(Duration::from_millis(delay_key - 15 * num_key_bracket));
-                    }
-                    ' ' => {
-                        if is_in_bracket {
-                            num_key_bracket = 0;
-                            std::thread::sleep(Duration::from_millis(delay_fast));
-                        } else if delay_space > 0 {
-                            std::thread::sleep(Duration::from_millis(delay_space));
-                        }
-                    }
-                    _ => {
-                        Key::new_from_key(char).press();
-                        if !is_in_bracket {
-                            std::thread::sleep(Duration::from_millis(delay_key - 15));
-                        } else {
-                            num_key_bracket += 1;
-                        }
-                    }
+                while !r#macro.tick_finished() {
+                    r#macro.tick();
                 }
 
             }

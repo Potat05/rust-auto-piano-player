@@ -28,7 +28,7 @@ static MIDI_KEY_MAP: [char; 128] = [
 
 
 pub struct Key {
-    midi_value: u8
+    pub midi_value: u8,
 }
 
 
