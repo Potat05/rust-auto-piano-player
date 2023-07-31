@@ -51,6 +51,17 @@ impl Macro {
         Self { events: Vec::new(), index: 0, next_time: 0, key_time: 15, keys_instant: 0 }
     }
 
+    pub fn reset(&mut self) {
+        self.index = 0;
+        self.next_time = 0;
+        self.keys_instant = 0;
+    }
+
+    pub fn started(&mut self) -> bool {
+        self.index > 0
+    }
+
+
     pub fn add_delay(&mut self, delay: i64) {
 
         if delay <= 0 {
@@ -104,7 +115,7 @@ impl Macro {
             }
             EventType::Key => {
                 Key::new(u8::from(event.value as u8)).press(self.key_time);
-                self.keys_instant += 0;
+                self.keys_instant += 1;
             }
         }
 
