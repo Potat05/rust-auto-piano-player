@@ -99,6 +99,7 @@ fn main() -> ExitCode {
             }
 
             println!("Finished.");
+            r#macro.reset();
 
         }
 
