@@ -1,0 +1,11 @@
+{
+    "$schema": "../schemas/piano_song.json",
+    "description": "Play every key on the piano at the same time.",
+    "comment": "For some reason this crashes without the ending space.",
+    "sheet": {
+        "delay": {
+
+        },
+        "string": "[1!2@34$5%6^78*9(0qQwWeErtTyYuiIoOpPasSdDfgGhHjJklLzZxcCvVbBnm] "
+    }
+}

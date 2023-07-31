@@ -1,6 +1,5 @@
 {
     "$schema": "../schemas/piano_song.json",
-    "name": "awasd",
     "description": "Play every key on the piano.",
     "sheet": {
         "delay": {
