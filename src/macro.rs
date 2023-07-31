@@ -41,12 +41,14 @@ pub struct Macro {
     pub events: Vec<Event>,
     pub index: usize,
     next_time: u128,
+    key_time: u64,
+    keys_instant: u64,
 }
 
 impl Macro {
 
     pub fn new() -> Self {
-        Self { events: Vec::new(), index: 0, next_time: 0 }
+        Self { events: Vec::new(), index: 0, next_time: 0, key_time: 15, keys_instant: 0 }
     }
 
     pub fn add_delay(&mut self, delay: i64) {
@@ -96,10 +98,13 @@ impl Macro {
 
         match event.r#type {
             EventType::Delay => {
-                self.next_time = get_cur_time() + u128::from(event.value as u64);
+                let keys_time = self.key_time * self.keys_instant;
+                self.next_time = get_cur_time() + u128::from(event.value as u64) - u128::from(keys_time);
+                self.keys_instant = 0;
             }
             EventType::Key => {
-                Key::new(u8::from(event.value as u8)).press();
+                Key::new(u8::from(event.value as u8)).press(self.key_time);
+                self.keys_instant += 0;
             }
         }
 

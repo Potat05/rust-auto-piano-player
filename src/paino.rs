@@ -46,7 +46,7 @@ impl Key {
         return Self::new(0);
     }
 
-    pub fn press(&mut self) {
+    pub fn press(&mut self, time: u64) {
         let key_char = MIDI_KEY_MAP[self.midi_value as usize];
 
         if key_char == '-' {
@@ -70,14 +70,14 @@ impl Key {
         if !upper {
 
             key.press();
-            thread::sleep(Duration::from_millis(15));
+            thread::sleep(Duration::from_millis(time));
             key.release();
 
         } else {
 
             Keyboard::LeftShift.press();
             key.press();
-            thread::sleep(Duration::from_millis(15));
+            thread::sleep(Duration::from_millis(time));
             Keyboard::LeftShift.release();
             key.release();
 
