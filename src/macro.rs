@@ -1,6 +1,6 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use crate::paino::Key;
+use crate::{paino::Key, song::MacroSongData};
 
 
 
@@ -8,7 +8,6 @@ pub enum EventType {
     Delay = 1,
     Key = 2
 }
-
 
 
 pub struct Event {
@@ -49,6 +48,24 @@ impl Macro {
 
     pub fn new() -> Self {
         Self { events: Vec::new(), index: 0, next_time: 0, key_time: 15, keys_instant: 0 }
+    }
+
+    pub fn from_json(data: MacroSongData) -> Self {
+        let mut r#macro = Self::new();
+
+        for event in data.events {
+            match event.r#type.as_u64().unwrap() {
+                1 => {
+                    r#macro.add_delay(event.value.as_i64().unwrap());
+                }
+                2 => {
+                    r#macro.add_key(Key::new(event.value.as_i64().unwrap() as u8));
+                }
+                _ => {}
+            }
+        }
+
+        r#macro
     }
 
     pub fn reset(&mut self) {

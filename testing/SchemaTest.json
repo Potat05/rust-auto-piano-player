@@ -1,0 +1,6 @@
+{
+    "$schema": "../schemas/piano_song.json",
+    "macro": {
+        "events": null
+    }
+}

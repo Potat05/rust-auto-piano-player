@@ -39,8 +39,19 @@ fn main() -> ExitCode {
 
 
 
-    let mut r#macro: Macro = sheet_to_macro(song.sheet);
+    let mut r#macro: Macro = {
+        if song.sheet.is_some() {
+            sheet_to_macro(song.sheet.unwrap())
+        } else if song.r#macro.is_some() {
+            Macro::from_json(song.r#macro.unwrap())
+        } else {
+            println!("Could not parse, No song data.");
+            return ExitCode::FAILURE;
+        }
+    };
 
+
+    
     println!("Duration {}s", r#macro.estimate_time() / 1000);
     
 

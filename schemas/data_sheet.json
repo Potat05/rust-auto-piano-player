@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
+    "description": "The song data in a human readable format.",
     "type": "object",
     "properties": {
         "delay": {
@@ -38,5 +39,5 @@
             "pattern": "^[1234567890qwertyuiopasdfghjklzxcvbnm!@$%^*\\(QWETYIOPSDGHJLZCVB |\\[\\]]*$"
         }
     },
-    "required": [ "delay", "string" ]
+    "required": [ "string" ]
 }

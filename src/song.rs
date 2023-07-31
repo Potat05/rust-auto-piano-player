@@ -4,8 +4,6 @@ use serde_json::Number;
 
 
 
-
-
 #[derive(Serialize, Deserialize)]
 pub struct SheetSongDataDelay {
     pub key: Option<Number>,
@@ -16,8 +14,22 @@ pub struct SheetSongDataDelay {
 
 #[derive(Serialize, Deserialize)]
 pub struct SheetSongData {
-    pub delay: SheetSongDataDelay,
+    pub delay: Option<SheetSongDataDelay>,
     pub string: String,
+}
+
+
+
+#[derive(Serialize, Deserialize)]
+pub struct MacroSongEvent {
+    pub r#type: Number,
+    pub value: Number,
+}
+
+
+#[derive(Serialize, Deserialize)]
+pub struct MacroSongData {
+    pub events: Vec<MacroSongEvent>,
 }
 
 
@@ -26,8 +38,8 @@ pub struct SheetSongData {
 pub struct Song {
     pub name: Option<String>,
     pub description: Option<String>,
-    // TODO - Macro data type.
-    pub sheet: SheetSongData,
+    pub sheet: Option<SheetSongData>,
+    pub r#macro: Option<MacroSongData>,
 }
 
 

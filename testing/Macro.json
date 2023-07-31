@@ -1,0 +1,19 @@
+{
+    "$schema": "../schemas/piano_song.json",
+    "macro": {
+        "events": [
+            {
+                "type": 2,
+                "value": 69
+            },
+            {
+                "type": 1,
+                "value": 500
+            },
+            {
+                "type": 2,
+                "value": 70
+            }
+        ]
+    }
+}

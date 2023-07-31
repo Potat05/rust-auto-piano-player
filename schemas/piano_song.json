@@ -1,6 +1,5 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "title": "Piano Song",
     "description": "Song for auto piano player.",
     "type": "object",
     "properties": {
@@ -26,7 +25,17 @@
         },
         "sheet": {
             "$ref": "data_sheet.json"
+        },
+        "macro": {
+            "$ref": "data_macro.json"
         }
     },
-    "required": [ "sheet" ]
+    "oneOf": [
+        {
+            "required": [ "sheet" ]
+        },
+        {
+            "required": [ "macro" ]
+        }
+    ]
 }

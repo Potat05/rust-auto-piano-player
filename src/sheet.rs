@@ -1,13 +1,15 @@
 
 use serde_json::Number;
 
-use crate::{song::SheetSongData, r#macro::Macro, paino::Key};
+use crate::{song::{SheetSongData, SheetSongDataDelay}, r#macro::Macro, paino::Key};
 
 
 
 pub fn sheet_to_macro(sheet: SheetSongData) -> Macro {
 
-    let delay = sheet.delay;
+    let default_delay = SheetSongDataDelay {  key: None, space: None, pause: None, fast: None };
+
+    let delay = sheet.delay.unwrap_or(default_delay);
     let delay_key = delay.key.unwrap_or(Number::from(200)).as_i64().unwrap();
     let delay_space = delay.space.unwrap_or(Number::from(200)).as_i64().unwrap();
     let delay_pause = delay.pause.unwrap_or(Number::from(400)).as_i64().unwrap();
