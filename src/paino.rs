@@ -1,6 +1,6 @@
-use std::{thread, time::Duration};
+use std::{thread, time::Duration, str::FromStr};
 
-use mki::{Sequence, Keyboard};
+use mki::Keyboard;
 
 
 
@@ -53,63 +53,34 @@ impl Key {
             return;
         }
 
-        // TODO: Don't do it this way.
-        // These is incredibly stupid and dumb
-        // !@$%^*( seems to be broken?
-        match key_char {
-            '!' => {
-                Keyboard::LeftShift.press();
-                Keyboard::Number1.press();
-                thread::sleep(Duration::from_millis(15));
-                Keyboard::LeftShift.release();
-                Keyboard::Number1.release();
-            }
-            '@' => {
-                Keyboard::LeftShift.press();
-                Keyboard::Number2.press();
-                thread::sleep(Duration::from_millis(15));
-                Keyboard::LeftShift.release();
-                Keyboard::Number2.release();
-            }
-            '$' => {
-                Keyboard::LeftShift.press();
-                Keyboard::Number4.press();
-                thread::sleep(Duration::from_millis(15));
-                Keyboard::LeftShift.release();
-                Keyboard::Number4.release();
-            }
-            '%' => {
-                Keyboard::LeftShift.press();
-                Keyboard::Number5.press();
-                thread::sleep(Duration::from_millis(15));
-                Keyboard::LeftShift.release();
-                Keyboard::Number5.release();
-            }
-            '^' => {
-                Keyboard::LeftShift.press();
-                Keyboard::Number6.press();
-                thread::sleep(Duration::from_millis(15));
-                Keyboard::LeftShift.release();
-                Keyboard::Number6.release();
-            }
-            '*' => {
-                Keyboard::LeftShift.press();
-                Keyboard::Number8.press();
-                thread::sleep(Duration::from_millis(15));
-                Keyboard::LeftShift.release();
-                Keyboard::Number8.release();
-            }
-            '(' => {
-                Keyboard::LeftShift.press();
-                Keyboard::Number9.press();
-                thread::sleep(Duration::from_millis(15));
-                Keyboard::LeftShift.release();
-                Keyboard::Number9.release();
-            }
-            _ => {
-                Sequence::text(&key_char.to_string()).unwrap().send();
-                thread::sleep(Duration::from_millis(15));
-            }
+        let is_special = "!@$%^*(".contains(key_char);
+
+        let key = match key_char {
+            '!' => { Keyboard::Number1 }
+            '@' => { Keyboard::Number2 }
+            '$' => { Keyboard::Number4 }
+            '%' => { Keyboard::Number5 }
+            '^' => { Keyboard::Number6 }
+            '*' => { Keyboard::Number8 }
+            '(' => { Keyboard::Number9 }
+            _ => { Keyboard::from_str(&key_char.to_ascii_uppercase().to_string()).unwrap() }
+        };
+        let upper = key_char.is_uppercase() || is_special;
+
+        if !upper {
+
+            key.press();
+            thread::sleep(Duration::from_millis(15));
+            key.release();
+
+        } else {
+
+            Keyboard::LeftShift.press();
+            key.press();
+            thread::sleep(Duration::from_millis(15));
+            Keyboard::LeftShift.release();
+            key.release();
+
         }
 
     }
