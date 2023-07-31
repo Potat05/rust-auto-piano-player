@@ -13,7 +13,7 @@ use crate::{song::Song, sheet::sheet_to_macro, r#macro::Macro};
 fn main() -> ExitCode {
     let args: Vec<String> = std::env::args().collect();
 
-    if args.len() < 2 || args[1].len() == 0 {
+    if args.len() < 2 {
         println!("No file was inputted.");
         return ExitCode::FAILURE;
     }

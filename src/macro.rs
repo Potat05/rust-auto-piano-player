@@ -100,7 +100,7 @@ impl Macro {
     }
 
     pub fn tick_finished(&mut self) -> bool {
-        self.next_time > get_cur_time()
+        self.next_time > get_cur_time() || self.finished()
     }
 
     pub fn tick(&mut self) {
