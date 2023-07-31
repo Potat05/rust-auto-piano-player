@@ -24,7 +24,7 @@ pub struct SheetSongData {
 
 #[derive(Serialize, Deserialize)]
 pub struct Song {
-    pub name: String,
+    pub name: Option<String>,
     pub description: Option<String>,
     // TODO - Macro data type.
     pub sheet: SheetSongData,
