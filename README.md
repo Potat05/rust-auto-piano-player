@@ -7,7 +7,7 @@ So it's probably very ugly and bad.
 
 I hope if theres something so stupid someone makes a pr to make it less stupid and I will learn.
 
-TODO: https://stackoverflow.com/questions/44733603/how-do-i-validate-json-using-an-existing-schema-file-in-rust
+TODO: Merging keys that have the same case into the same instant.
 
 
 
