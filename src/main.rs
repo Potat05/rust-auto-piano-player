@@ -77,13 +77,15 @@ fn main() -> ExitCode {
                     r#macro.tick();
                 }
 
+                std::thread::sleep(Duration::from_millis(10));
+
             }
 
             println!("Finished.");
 
         }
 
-        std::thread::sleep(Duration::from_millis(100));
+        std::thread::sleep(Duration::from_millis(10));
     }
 
 
