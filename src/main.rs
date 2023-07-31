@@ -41,8 +41,9 @@ fn main() -> ExitCode {
 
     println!();
     println!("NUMPAD0 = Exit program.");
-    println!("NUMPAD1 = Start playing song.");
-    println!("NUMPAD2 = Stop playing song.");
+    println!("NUMPAD1 = Play.");
+    println!("NUMPAD2 = Pause.");
+    println!("NUMPAD3 = Stop.");
     println!();
 
 
@@ -57,9 +58,14 @@ fn main() -> ExitCode {
             break 'mainloop;
         }
 
+        if Keyboard::is_pressed(&Keyboard::Numpad3) && r#macro.started() {
+            println!("Reset.");
+            r#macro.reset();
+        }
+
         if Keyboard::is_pressed(&Keyboard::Numpad1) {
 
-            println!("Started.");
+            println!("Playing.");
 
             while !r#macro.finished() {
 
@@ -69,7 +75,13 @@ fn main() -> ExitCode {
                 }
 
                 if Keyboard::is_pressed(&Keyboard::Numpad2) {
-                    println!("Stopping.");
+                    println!("Paused.");
+                    continue 'mainloop;
+                }
+
+                if Keyboard::is_pressed(&Keyboard::Numpad3) {
+                    println!("Stopped.");
+                    r#macro.reset();
                     continue 'mainloop;
                 }
 
