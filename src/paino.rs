@@ -91,7 +91,7 @@ impl KeyMerger {
     }
 
     pub fn sleeps(&self) -> u8 {
-        u8::from(!self.lower.is_empty()) + u8::from(self.upper.is_empty())
+        u8::from(!self.lower.is_empty()) + u8::from(!self.upper.is_empty())
     }
 
     pub fn add_key(&mut self, key: Key) {
