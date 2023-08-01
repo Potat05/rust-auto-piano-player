@@ -27,6 +27,7 @@ static MIDI_KEY_MAP: [char; 128] = [
 
 
 
+#[derive(Clone, Copy)]
 pub struct Key {
     pub midi_value: u8,
 }
@@ -34,6 +35,7 @@ pub struct Key {
 
 
 impl Key {
+
     pub fn new(midi_value: u8) -> Self {
         return Self { midi_value };
     }
@@ -46,16 +48,20 @@ impl Key {
         return Self::new(0);
     }
 
-    pub fn press(&mut self, time: u64) {
-        let key_char = MIDI_KEY_MAP[self.midi_value as usize];
-
-        if key_char == '-' {
-            return;
-        }
-
-        let is_special = "!@$%^*(".contains(key_char);
-
-        let key = match key_char {
+    pub fn char(&self) -> char {
+        MIDI_KEY_MAP[self.midi_value as usize]
+    }
+    pub fn is_valid(&self) -> bool {
+        self.char() != '-'
+    }
+    pub fn is_upper(&self) -> bool {
+        // All upper chars are sharp.
+        let char = self.char();
+        char.is_uppercase() || "!@$%^*(".contains(char)
+    }
+    pub fn keyboard(&self) -> Keyboard {
+        let char = self.char();
+        match char {
             '!' => { Keyboard::Number1 }
             '@' => { Keyboard::Number2 }
             '$' => { Keyboard::Number4 }
@@ -63,27 +69,94 @@ impl Key {
             '^' => { Keyboard::Number6 }
             '*' => { Keyboard::Number8 }
             '(' => { Keyboard::Number9 }
-            _ => { Keyboard::from_str(&key_char.to_ascii_uppercase().to_string()).unwrap() }
-        };
-        let upper = key_char.is_uppercase() || is_special;
-
-        if !upper {
-
-            key.press();
-            thread::sleep(Duration::from_millis(time));
-            key.release();
-
-        } else {
-
-            Keyboard::LeftShift.press();
-            key.press();
-            thread::sleep(Duration::from_millis(time));
-            Keyboard::LeftShift.release();
-            key.release();
-
+            _ => { Keyboard::from_str(&char.to_ascii_uppercase().to_string()).unwrap() }
         }
-
     }
+
 }
 
 
+
+
+
+pub struct KeyMerger {
+    lower: Vec<Key>,
+    upper: Vec<Key>,
+}
+
+impl KeyMerger {
+
+    pub fn new() -> Self {
+        Self { lower: Vec::new(), upper: Vec::new() }
+    }
+
+    pub fn sleeps(&self) -> u8 {
+        u8::from(!self.lower.is_empty()) + u8::from(self.upper.is_empty())
+    }
+
+    pub fn add_key(&mut self, key: Key) {
+        if !key.is_valid() {
+            return;
+        }
+        
+        if !key.is_upper() {
+            self.lower.push(key);
+        } else {
+            self.upper.push(key);
+        }
+    }
+
+    pub fn press_lower_keys(&mut self, time: u64) {
+
+        if self.lower.is_empty() {
+            return;
+        }
+
+
+        for key in self.lower.iter() {
+            key.keyboard().press();
+        }
+
+        thread::sleep(Duration::from_millis(time));
+
+        for key in self.lower.iter() {
+            key.keyboard().release();
+        }
+
+
+        self.lower.clear();
+
+    }
+
+    pub fn press_upper_keys(&mut self, time: u64) {
+
+        if self.upper.is_empty() {
+            return;
+        }
+
+
+        Keyboard::LeftShift.press();
+
+        for key in self.upper.iter() {
+            key.keyboard().press();
+        }
+
+        thread::sleep(Duration::from_millis(time));
+
+        for key in self.upper.iter() {
+            key.keyboard().release();
+        }
+
+        Keyboard::LeftShift.release();
+
+
+        self.upper.clear();
+
+    }
+
+    pub fn press_keys(&mut self, time: u64) {
+        self.press_lower_keys(time);
+        self.press_upper_keys(time);
+    }
+
+}

@@ -105,6 +105,8 @@ fn main() -> ExitCode {
                     r#macro.tick();
                 }
 
+                r#macro.merger.press_keys(r#macro.key_time);
+
                 std::thread::sleep(Duration::from_millis(10));
 
             }

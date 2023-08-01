@@ -1,6 +1,6 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use crate::{paino::Key, song::MacroSongData};
+use crate::{paino::{Key, KeyMerger}, song::MacroSongData};
 
 
 
@@ -40,14 +40,14 @@ pub struct Macro {
     pub events: Vec<Event>,
     pub index: usize,
     next_time: u128,
-    key_time: u64,
-    keys_instant: u64,
+    pub key_time: u64,
+    pub merger: KeyMerger,
 }
 
 impl Macro {
 
     pub fn new() -> Self {
-        Self { events: Vec::new(), index: 0, next_time: 0, key_time: 15, keys_instant: 0 }
+        Self { events: Vec::new(), index: 0, next_time: 0, key_time: 15, merger: KeyMerger::new() }
     }
 
     pub fn from_json(data: MacroSongData) -> Self {
@@ -71,7 +71,6 @@ impl Macro {
     pub fn reset(&mut self) {
         self.index = 0;
         self.next_time = 0;
-        self.keys_instant = 0;
     }
 
     pub fn started(&mut self) -> bool {
@@ -126,13 +125,10 @@ impl Macro {
 
         match event.r#type {
             EventType::Delay => {
-                let keys_time = self.key_time * self.keys_instant;
-                self.next_time = get_cur_time() + u128::from(event.value as u64) - u128::from(keys_time);
-                self.keys_instant = 0;
+                self.next_time = get_cur_time() + u128::from(event.value as u64) - u128::from(self.key_time) * u128::from(self.merger.sleeps());
             }
             EventType::Key => {
-                Key::new(u8::from(event.value as u8)).press(self.key_time);
-                self.keys_instant += 1;
+                self.merger.add_key(Key::new(u8::from(event.value as u8)));
             }
         }
 
