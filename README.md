@@ -10,7 +10,6 @@ I hope if theres something so stupid someone makes a pr to make it less stupid a
 
 
 * TODO
-    * Merging keys that have the same case into the same instant.
     * Midi support
 
 
