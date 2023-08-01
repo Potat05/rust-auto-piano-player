@@ -11,6 +11,25 @@ use crate::{song::Song, sheet::sheet_to_macro, r#macro::Macro};
 
 
 
+fn format_duration(duration: u64) -> String {
+    if duration >= 3_600_000 {
+        format!(
+            "{:0>2}:{:0>2}:{:0>2}",
+            ((duration / 1000) / 60) / 60,
+            ((duration / 1000) / 60) % 60,
+            (duration / 1000) % 60
+        )
+    } else {
+        format!(
+            "{:0>2}:{:0>2}",
+            ((duration / 1000) / 60) % 60,
+            (duration / 1000) % 60
+        )
+    }
+}
+
+
+
 fn main() -> ExitCode {
     let args: Vec<String> = std::env::args().collect();
 
@@ -53,14 +72,6 @@ fn main() -> ExitCode {
 
 
 
-    println!("Duration [{:0>2}:{:0>2}:{:0>2}]",
-        ((r#macro.total_time / 1000) / 60) / 60,
-        ((r#macro.total_time / 1000) / 60) % 60,
-        (r#macro.total_time / 1000) % 60
-    );
-    
-
-
     println!();
     println!("NUMPAD0 = Exit program.");
     println!("NUMPAD1 = Play.");
@@ -95,7 +106,7 @@ fn main() -> ExitCode {
             }
 
             let bar = ProgressBar::new(r#macro.total_time);
-            bar.set_style(ProgressStyle::with_template("Progress [{bar:40.cyan/blue}] {percent}%")
+            bar.set_style(ProgressStyle::with_template("Progress {msg} [{bar:40.cyan/blue}] {percent}%")
                 .unwrap()
                 .progress_chars("=>-"));
 
@@ -126,6 +137,11 @@ fn main() -> ExitCode {
                 r#macro.merger.press_keys(r#macro.key_time);
 
                 bar.set_position(r#macro.current_time);
+                bar.set_message(format!(
+                    "[{}]/[{}]",
+                    format_duration(r#macro.current_time),
+                    format_duration(r#macro.total_time)
+                ));
 
                 std::thread::sleep(Duration::from_millis(10));
 
