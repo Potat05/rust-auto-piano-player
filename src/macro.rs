@@ -37,17 +37,27 @@ fn get_cur_time() -> u128 {
 
 
 pub struct Macro {
-    pub events: Vec<Event>,
-    pub index: usize,
+    events: Vec<Event>,
+    index: usize,
     next_time: u128,
     pub key_time: u64,
     pub merger: KeyMerger,
+    pub current_time: u64,
+    pub total_time: u64,
 }
 
 impl Macro {
 
     pub fn new() -> Self {
-        Self { events: Vec::new(), index: 0, next_time: 0, key_time: 15, merger: KeyMerger::new() }
+        Self {
+            events: Vec::new(),
+            index: 0,
+            next_time: 0,
+            key_time: 15,
+            merger: KeyMerger::new(),
+            current_time: 0,
+            total_time: 0
+        }
     }
 
     pub fn from_json(data: MacroSongData) -> Self {
@@ -71,6 +81,7 @@ impl Macro {
     pub fn reset(&mut self) {
         self.index = 0;
         self.next_time = 0;
+        self.current_time = 0;
     }
 
     pub fn started(&mut self) -> bool {
@@ -83,21 +94,27 @@ impl Macro {
         if delay <= 0 {
             return;
         }
+        self.total_time += delay as u64;
 
-        // let last = self.events.last();
 
-        // if last.is_some() {
-        //     let last = last.unwrap();
+        let last = self.events.last();
 
-        //     match last.r#type {
-        //         EventType::Delay => {
-        //             last.value += delay;
-        //             return;
-        //         }
-        //         _ => {}
-        //     }
+        if last.is_some() {
+            let last = last.unwrap();
 
-        // }
+            match last.r#type {
+                EventType::Delay => {
+                    // TODO: Don't do this.
+                    let mut pop = self.events.pop().unwrap();
+                    pop.value += delay;
+                    self.events.push(pop);
+                    return;
+                }
+                _ => {}
+            }
+            
+        }
+
 
         self.events.push(Event::new(EventType::Delay, delay));
 
@@ -126,7 +143,9 @@ impl Macro {
         match event.r#type {
             EventType::Delay => {
                 let key_len = self.key_time * u64::from(self.merger.sleeps());
-                self.next_time = get_cur_time() + u128::from(event.value as u64) - u128::from(key_len);
+                let delay_len = event.value as u64;
+                self.next_time = get_cur_time() + u128::from(delay_len) - u128::from(key_len);
+                self.current_time += delay_len;
             }
             EventType::Key => {
                 self.merger.add_key(Key::new(u8::from(event.value as u8)));
@@ -135,21 +154,6 @@ impl Macro {
 
         self.index += 1;
         
-    }
-
-
-
-    pub fn estimate_time(&mut self) -> u64 {
-        let mut max: u64 = 0;
-        for event in self.events.iter() {
-            match event.r#type {
-                EventType::Delay => {
-                    max += event.value as u64;
-                }
-                _ => {}
-            }
-        }
-        max
     }
 
 }

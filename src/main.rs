@@ -4,6 +4,7 @@ mod r#macro;
 mod sheet;
 
 use std::{process::ExitCode, time::Duration, fs};
+use indicatif::{ProgressBar, ProgressStyle};
 use mki::Keyboard;
 
 use crate::{song::Song, sheet::sheet_to_macro, r#macro::Macro};
@@ -51,8 +52,12 @@ fn main() -> ExitCode {
     };
 
 
-    
-    println!("Duration {}s", r#macro.estimate_time() / 1000);
+
+    println!("Duration [{:0>2}:{:0>2}:{:0>2}]",
+        ((r#macro.total_time / 1000) / 60) / 60,
+        ((r#macro.total_time / 1000) / 60) % 60,
+        (r#macro.total_time / 1000) % 60
+    );
     
 
 
@@ -83,6 +88,11 @@ fn main() -> ExitCode {
 
             println!("Playing.");
 
+            let bar = ProgressBar::new(r#macro.total_time);
+            bar.set_style(ProgressStyle::with_template("Progress [{bar:40.red/orange}] {percent}%")
+                .unwrap()
+                .progress_chars("▓▒░"));
+
             while !r#macro.finished() {
 
                 if Keyboard::is_pressed(&Keyboard::Numpad0) {
@@ -91,11 +101,13 @@ fn main() -> ExitCode {
                 }
 
                 if Keyboard::is_pressed(&Keyboard::Numpad2) {
+                    bar.finish_and_clear();
                     println!("Paused.");
                     continue 'mainloop;
                 }
 
                 if Keyboard::is_pressed(&Keyboard::Numpad3) {
+                    bar.finish_and_clear();
                     println!("Stopped.");
                     r#macro.reset();
                     continue 'mainloop;
@@ -107,12 +119,19 @@ fn main() -> ExitCode {
 
                 r#macro.merger.press_keys(r#macro.key_time);
 
+                bar.set_position(r#macro.current_time);
+
                 std::thread::sleep(Duration::from_millis(10));
 
             }
 
-            println!("Finished.");
             r#macro.reset();
+
+            bar.finish_and_clear();
+            bar.set_style(ProgressStyle::with_template("Finished [{bar:40.green/lime}] 100%")
+                .unwrap()
+                .progress_chars("▓▒░"));
+            bar.finish();
 
         }
 
