@@ -151,7 +151,7 @@ fn main() -> ExitCode {
 
             bar.set_style(ProgressStyle::with_template("Finished [{bar:40.green/lime}] 100%")
                 .unwrap()
-                .progress_chars("▓▒░"));
+                .progress_chars("=>-"));
             bar.finish();
 
         }
