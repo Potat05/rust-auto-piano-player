@@ -125,7 +125,8 @@ impl Macro {
 
         match event.r#type {
             EventType::Delay => {
-                self.next_time = get_cur_time() + u128::from(event.value as u64) - u128::from(self.key_time) * u128::from(self.merger.sleeps());
+                let key_len = self.key_time * u64::from(self.merger.sleeps());
+                self.next_time = get_cur_time() + u128::from(event.value as u64) - u128::from(key_len);
             }
             EventType::Key => {
                 self.merger.add_key(Key::new(u8::from(event.value as u8)));
