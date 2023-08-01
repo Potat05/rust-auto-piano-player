@@ -89,9 +89,9 @@ fn main() -> ExitCode {
             println!("Playing.");
 
             let bar = ProgressBar::new(r#macro.total_time);
-            bar.set_style(ProgressStyle::with_template("Progress [{bar:40.red/orange}] {percent}%")
+            bar.set_style(ProgressStyle::with_template("Progress [{bar:40.cyan/blue}] {percent}%")
                 .unwrap()
-                .progress_chars("▓▒░"));
+                .progress_chars("=>-"));
 
             while !r#macro.finished() {
 
