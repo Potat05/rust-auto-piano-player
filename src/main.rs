@@ -88,6 +88,12 @@ fn main() -> ExitCode {
 
             println!("Playing.");
 
+            // Wait until Numpad1 is not pressed.
+            // Sometimes when its pressed and the song starts it stays down.
+            while Keyboard::is_pressed(&Keyboard::Numpad1) {
+                std::thread::sleep(Duration::from_millis(10));
+            }
+
             let bar = ProgressBar::new(r#macro.total_time);
             bar.set_style(ProgressStyle::with_template("Progress [{bar:40.cyan/blue}] {percent}%")
                 .unwrap()
@@ -127,7 +133,6 @@ fn main() -> ExitCode {
 
             r#macro.reset();
 
-            bar.finish_and_clear();
             bar.set_style(ProgressStyle::with_template("Finished [{bar:40.green/lime}] 100%")
                 .unwrap()
                 .progress_chars("▓▒░"));
