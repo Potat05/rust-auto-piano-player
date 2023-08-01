@@ -11,6 +11,7 @@ I hope if theres something so stupid someone makes a pr to make it less stupid a
 
 * TODO
     * Midi support
+    * Figure out github actions to auto build the project
 
 
 
