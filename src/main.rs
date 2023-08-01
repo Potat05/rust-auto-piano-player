@@ -149,7 +149,7 @@ fn main() -> ExitCode {
 
             r#macro.reset();
 
-            bar.set_style(ProgressStyle::with_template("Finished [{bar:40.green/lime}] 100%")
+            bar.set_style(ProgressStyle::with_template("Finished {msg} [{bar:40.green/lime}] 100%")
                 .unwrap()
                 .progress_chars("=>-"));
             bar.finish();
