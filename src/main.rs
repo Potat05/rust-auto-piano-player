@@ -97,7 +97,6 @@ fn main() -> ExitCode {
     };
 
     bar_paused();
-    bar.tick();
 
 
 
