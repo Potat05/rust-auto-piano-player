@@ -1,0 +1,13 @@
+{
+    "$schema": "../schemas/piano_song.json",
+    "name": "Temple of Time (MapleStory)",
+    "url": "https://virtualpiano.net/music-sheet/temple-of-time-maplestory/",
+    "sheet": {
+        "delay": {
+            "key": 175,
+            "space": 175,
+            "pause": 500
+        },
+        "string": "[yrI95]| |[ueT$]| |[ywrI73]| |o| |[eTQ62]| |[e60]|aSdf[pfI95] [aG] [pf] [aG] [pf] [aG] [jd] [pf] [upf$] [aG] [pf] [aG] [jS]| |[pfI73] [aG] [pf] [aG] [upf$] [aG] [jS] [pf] [pfI95] [aG] [pf] [aG] [pf]| |[pfI95] [aG] [pf] [aG] [pf] [aG] [jd] [pf] [upf$] [aG] [pf] [aG] [jS]| |[pfI73] [aG] [pf] [aG] [pof] [aG] [jd] [pf] [pf62] [aG] [ha] [pf] [aG60]| |[pfI95] [aG] [pf] [aG] [pf] [aG] [jd] [pf] [upf$] [aG] [pf] [aG] [jS]| |[pof73] [aG] [pf] [aG] [upf$] [aG] [jS] [pf] [I95]adG| |kLzx[G5]kzC9 [rkQ] 9 [G5]kzC9 [rkQ] 9 [f$]jLx[z] [eSL] [j*] [f$] * [eS] * [G5]kzC9 [rkQ] 9 [G5]kzC9 [rkQ] 9 [f$]jLx[z] [eSL] [z] [xf$] * [eS] * [G5]kzC9 [rkQ] 9 [G5]kzC9 [rkQ] 9 [f$]jLx[z] [eSL] [k] [jf$] * [keS] [L] [f3]hkz7 [C9] [0$] GjL [xe] T [h5]kz9 r 9 [dG5] [fS9] [wrd]IpS[wo5]adS a [pTI30]|* 0 [uoa93]|[pSI0$]|[daQI5]|9 w ry[woda5] S a [upT30]|d S|[uoa93]|[pSI0$]|[daQI5]|5|[wo5]aadS a [pQ$]|d [S0$]|[uro3] 9 [upT$] 0 [yrQI75]|p uo[yw5]oadS [yd] [SQI6]|[d0] [fe] [yw7]oad| |aSdf[I5]adG9 [raI] 9 [I5]adG9 [raI] 9 [I$]pSf[d*] [TS] [pe] [u$] * T e [I5]adG9 [raI] 9 [I5]adG9 [raI] 9 [I$]pSf[d*] [TS] [ed] [uf$] * T e [I5]adG9 [raI] 9 [I5]adG9 [raI] 9 [I$]pSf[d*] [TS] [ea] [up$] * [aT] [eS] [o3]ad7 [G9] [p$] S * [fe] T [o5]ad9 r e d [f9] [rG] [j9] [G5]kzC9 [rkG] 9 [G5]kzC9 [rkG] 9 [f$]jLx[z] [eSL] [j] $ [a]S[ed]f[G]h[G5]kzC9 [wkG] r [G5]kzC9 [wkG] r [G$]jLx[z] [SQL] [ze] [xG$]h[j]k[QL]z[eL]k[G5]kzC9 [rkG] 9 [G5]kzC9 [rkG] 9 [G$]jLx[z] [eL] [k] [jfS$] * [ke] [L] [f3]hkz7 [C9] [j$] GjL [xe] T [h5]kz9 [dQG] w y T e|[wf] [yG] [fI] [oG] f [aG] j|[fQ] [dT] [uS] [aI] p a S d [o0]aGr [ua] o G r a u [fQ] [dT] [uS] [aI] p T S u [o0]af[rG] [uf] [IG] [pfQ] [TG] [jI] f [wdaG] I S dSp| |Ghkz"
+    }
+}
