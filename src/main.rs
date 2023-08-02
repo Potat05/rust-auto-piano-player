@@ -75,12 +75,29 @@ fn main() -> ExitCode {
     println!();
     println!("NUMPAD0 = Exit program.");
     println!("NUMPAD1 = Play.");
-    println!("NUMPAD2 = Pause.");
-    println!("NUMPAD3 = Stop.");
+    println!("NUMPAD2 = Pause / Reset.");
     println!();
 
+    let bar = ProgressBar::new(r#macro.total_time);
 
+    let bar_playing = || {
+        bar.set_style(ProgressStyle::with_template("Playing {msg} [{bar:40.cyan/blue}] {percent}%")
+            .unwrap()
+            .progress_chars("=>-"));
+    };
+    let bar_paused = || {
+        bar.set_style(ProgressStyle::with_template("Paused {msg} [{bar:40.red/red}] {percent}%")
+            .unwrap()
+            .progress_chars("=>-"));
+    };
+    let bar_finished = || {
+        bar.set_style(ProgressStyle::with_template("Finished {msg} [{bar:40.green/green}] {percent}%")
+            .unwrap()
+            .progress_chars("=>-"));
+    };
 
+    bar_paused();
+    bar.tick();
 
 
 
@@ -90,14 +107,13 @@ fn main() -> ExitCode {
             break 'mainloop;
         }
 
-        if Keyboard::is_pressed(&Keyboard::Numpad3) && r#macro.started() {
-            println!("Reset.");
+        if Keyboard::is_pressed(&Keyboard::Numpad2) && r#macro.started() {
             r#macro.reset();
+            bar.set_position(r#macro.current_time);
+            bar_paused();
         }
 
         if Keyboard::is_pressed(&Keyboard::Numpad1) {
-
-            println!("Playing.");
 
             // Wait until Numpad1 is not pressed.
             // Sometimes when its pressed and the song starts it stays down.
@@ -105,30 +121,25 @@ fn main() -> ExitCode {
                 std::thread::sleep(Duration::from_millis(10));
             }
 
-            let bar = ProgressBar::new(r#macro.total_time);
-            bar.set_style(ProgressStyle::with_template("Progress {msg} [{bar:40.cyan/blue}] {percent}%")
-                .unwrap()
-                .progress_chars("=>-"));
+            bar_playing();
 
             while !r#macro.finished() {
 
                 if Keyboard::is_pressed(&Keyboard::Numpad0) {
+                    bar_paused();
                     println!("Exiting.");
                     break 'mainloop;
                 }
 
                 if Keyboard::is_pressed(&Keyboard::Numpad2) {
-                    bar.finish_and_clear();
-                    println!("Paused.");
+                    bar_paused();
+                    while Keyboard::is_pressed(&Keyboard::Numpad2) {
+                        std::thread::sleep(Duration::from_millis(10));
+                    }
                     continue 'mainloop;
                 }
 
-                if Keyboard::is_pressed(&Keyboard::Numpad3) {
-                    bar.finish_and_clear();
-                    println!("Stopped.");
-                    r#macro.reset();
-                    continue 'mainloop;
-                }
+
 
                 while !r#macro.tick_finished() {
                     r#macro.tick();
@@ -149,12 +160,12 @@ fn main() -> ExitCode {
 
             r#macro.reset();
 
-            bar.set_style(ProgressStyle::with_template("Finished {msg} [{bar:40.green/lime}] 100%")
-                .unwrap()
-                .progress_chars("=>-"));
+            bar_finished();
             bar.finish();
 
         }
+
+        bar.tick();
 
         std::thread::sleep(Duration::from_millis(10));
         
