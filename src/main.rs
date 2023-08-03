@@ -2,12 +2,57 @@ mod paino;
 mod song;
 mod r#macro;
 mod sheet;
+mod midi;
 
 use std::{process::ExitCode, time::Duration, fs};
 use indicatif::{ProgressBar, ProgressStyle};
 use mki::Keyboard;
 
 use crate::{song::Song, sheet::sheet_to_macro, r#macro::Macro};
+
+
+
+
+fn load_song(file_path: &String) -> Option<Macro> {
+    if fs::metadata(file_path).is_err() {
+        println!("Error while reading file.");
+        return None;
+    }
+
+
+
+    match file_path.split(".").last().unwrap_or("txt") {
+        "json" => {
+            
+            let song_string = fs::read_to_string(file_path).unwrap();
+            let song: Song = serde_json::from_str(&song_string).unwrap();
+
+            if song.name.is_some() {
+                println!("Loaded \"{}\".", song.name.unwrap());
+            } else {
+                println!("Loaded.");
+            }
+            if song.description.is_some() {
+                println!("{}", song.description.unwrap());
+            }
+
+            if song.sheet.is_some() {
+                Some(sheet_to_macro(song.sheet.unwrap()))
+            } else if song.r#macro.is_some() {
+                Some(Macro::from_json(song.r#macro.unwrap()))
+            } else {
+                println!("Could not parse, No song data.");
+                None
+            }
+
+        }
+        "mid" | "midi" => {
+            None
+        }
+        _ => None
+    }
+
+}
 
 
 
@@ -45,30 +90,9 @@ fn main() -> ExitCode {
         return ExitCode::FAILURE;
     }
 
-    let song_string = fs::read_to_string(file_path).unwrap();
-    let song: Song = serde_json::from_str(&song_string).unwrap();
-
-    if song.name.is_some() {
-        println!("Loaded \"{}\".", song.name.unwrap());
-    } else {
-        println!("Loaded.");
-    }
-    if song.description.is_some() {
-        println!("{}", song.description.unwrap());
-    }
 
 
-
-    let mut r#macro: Macro = {
-        if song.sheet.is_some() {
-            sheet_to_macro(song.sheet.unwrap())
-        } else if song.r#macro.is_some() {
-            Macro::from_json(song.r#macro.unwrap())
-        } else {
-            println!("Could not parse, No song data.");
-            return ExitCode::FAILURE;
-        }
-    };
+    let mut r#macro = load_song(file_path).unwrap();
 
 
 
