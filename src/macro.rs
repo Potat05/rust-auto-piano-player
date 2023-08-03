@@ -6,8 +6,11 @@ use crate::{paino::{Key, KeyMerger}, song::MacroSongData};
 
 pub enum EventType {
     Delay = 1,
-    Key = 2
+    Key = 2,
+    PressKey = 3,
+    ReleaseKey = 4
 }
+
 
 
 pub struct Event {
@@ -69,7 +72,13 @@ impl Macro {
                     r#macro.add_delay(event.value.as_i64().unwrap());
                 }
                 2 => {
-                    r#macro.add_key(Key::new(event.value.as_i64().unwrap() as u8));
+                    r#macro.add_key(Key::new(event.value.as_i64().unwrap() as u8), EventType::Key);
+                }
+                3 => {
+                    r#macro.add_key(Key::new(event.value.as_i64().unwrap() as u8), EventType::PressKey);
+                }
+                4 => {
+                    r#macro.add_key(Key::new(event.value.as_i64().unwrap() as u8), EventType::ReleaseKey);
                 }
                 _ => {}
             }
@@ -120,9 +129,9 @@ impl Macro {
 
     }
 
-    pub fn add_key(&mut self, key: Key) {
+    pub fn add_key(&mut self, key: Key, r#type: EventType) {
 
-        self.events.push(Event::new(EventType::Key, i64::from(key.midi_value)));
+        self.events.push(Event::new(r#type, i64::from(key.midi_value)));
 
     }
 
@@ -149,6 +158,12 @@ impl Macro {
             }
             EventType::Key => {
                 self.merger.add_key(Key::new(u8::from(event.value as u8)));
+            }
+            EventType::PressKey => {
+                // TODO: Implement
+            }
+            EventType::ReleaseKey => {
+                // TODO: Implement
             }
         }
 

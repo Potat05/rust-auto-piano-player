@@ -2,7 +2,7 @@
 use midi_reader_writer::{ConvertTicksToMicroseconds, midly_0_5::merge_tracks};
 use midly::{Smf, live::LiveEvent, MidiMessage};
 
-use crate::{r#macro::Macro, paino::Key};
+use crate::{r#macro::{Macro, EventType}, paino::Key};
 
 
 
@@ -33,7 +33,7 @@ pub fn midi_to_macro(bytes: Vec<u8>) -> Option<Macro> {
                 LiveEvent::Midi { channel: _, message } => match message {
                     MidiMessage::NoteOn { key, vel } => {
                         if vel > 0 {
-                            r#macro.add_key(Key::new(key.as_int()));
+                            r#macro.add_key(Key::new(key.as_int()), EventType::Key);
                         }
                     }
                     _ => {}

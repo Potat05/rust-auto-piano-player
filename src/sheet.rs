@@ -1,7 +1,7 @@
 
 use serde_json::Number;
 
-use crate::{song::{SheetSongData, SheetSongDataDelay}, r#macro::Macro, paino::Key};
+use crate::{song::{SheetSongData, SheetSongDataDelay}, r#macro::{Macro, EventType}, paino::Key};
 
 
 
@@ -46,7 +46,7 @@ pub fn sheet_to_macro(sheet: SheetSongData) -> Macro {
             }
             _ => {
 
-                r#macro.add_key(Key::new_from_key(char));
+                r#macro.add_key(Key::new_from_key(char), EventType::Key);
 
                 if !is_in_bracket {
                     r#macro.add_delay(delay_key);
