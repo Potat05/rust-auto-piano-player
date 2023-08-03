@@ -6,6 +6,7 @@ mod midi;
 
 use std::{process::ExitCode, time::Duration, fs};
 use indicatif::{ProgressBar, ProgressStyle};
+use midi::midi_to_macro;
 use mki::Keyboard;
 
 use crate::{song::Song, sheet::sheet_to_macro, r#macro::Macro};
@@ -47,7 +48,9 @@ fn load_song(file_path: &String) -> Option<Macro> {
 
         }
         "mid" | "midi" => {
-            None
+
+            midi_to_macro(fs::read(file_path).unwrap())
+
         }
         _ => None
     }
@@ -76,11 +79,12 @@ fn format_duration(duration: u64) -> String {
 
 
 fn main() -> ExitCode {
-    let args: Vec<String> = std::env::args().collect();
+    let mut args: Vec<String> = std::env::args().collect();
 
     if args.len() < 2 {
-        println!("No file was inputted.");
-        return ExitCode::FAILURE;
+        args.push("D:\\Coding\\rust\\rust-auto-piano-player\\songs\\Super Mario Bros. Theme.mid".to_owned());
+        // println!("No file was inputted.");
+        // return ExitCode::FAILURE;
     }
 
     let file_path = &args[1];
