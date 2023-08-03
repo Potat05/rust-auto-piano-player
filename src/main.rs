@@ -82,9 +82,8 @@ fn main() -> ExitCode {
     let mut args: Vec<String> = std::env::args().collect();
 
     if args.len() < 2 {
-        args.push("D:\\Coding\\rust\\rust-auto-piano-player\\songs\\Super Mario Bros. Theme.mid".to_owned());
-        // println!("No file was inputted.");
-        // return ExitCode::FAILURE;
+        println!("No file was inputted.");
+        return ExitCode::FAILURE;
     }
 
     let file_path = &args[1];
