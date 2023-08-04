@@ -18,6 +18,7 @@ I hope if theres something so stupid someone makes a pr to make it less stupid a
     * Add icon to exe
         * (I have fought hard and long, gave up and failed. I do not want to install 5gb of extra stuff just to get icons to work.)
         * (Someone please find an easy, not dumb way to do this.)
+    * Include songs/ in release.
 
 
 
