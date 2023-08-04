@@ -10,11 +10,11 @@ I hope if theres something so stupid someone makes a pr to make it less stupid a
 
 
 * TODO
-    * Midi support
+    * Better midi support
     * Figure out github actions to auto build the project
     * Add icon to exe
         * (I have fought hard and long, gave up and failed. I do not want to install 5gb of extra stuff just to get icons to work.)
-        * (Someone please find an easy not dumb way to do this.)
+        * (Someone please find an easy, not dumb way to do this.)
 
 
 
