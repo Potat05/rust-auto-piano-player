@@ -100,9 +100,21 @@ impl KeyMerger {
         }
         
         if !key.is_upper() {
+
+            if self.lower.iter().any(|i_key| i_key.midi_value == key.midi_value) {
+                return;
+            }
+
             self.lower.push(key);
+
         } else {
+
+            if self.upper.iter().any(|i_key| i_key.midi_value == key.midi_value) {
+                return;
+            }
+
             self.upper.push(key);
+
         }
     }
 
