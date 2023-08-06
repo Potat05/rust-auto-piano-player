@@ -6,9 +6,7 @@ use crate::{r#macro::{Macro, EventType}, paino::Key};
 
 
 
-pub fn midi_to_macro(bytes: Vec<u8>) -> Option<Macro> {
-    
-    let midi = Smf::parse(&bytes).unwrap();
+pub fn midi_to_macro(midi: Smf<'_>) -> Option<Macro> {
 
     let mut ticks_to_microseconds = ConvertTicksToMicroseconds::try_from(midi.header).unwrap();
     

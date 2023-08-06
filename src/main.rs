@@ -7,6 +7,7 @@ mod midi;
 use std::{process::ExitCode, time::Duration, fs};
 use indicatif::{ProgressBar, ProgressStyle};
 use midi::midi_to_macro;
+use midly::Smf;
 use mki::Keyboard;
 
 use crate::{song::Song, sheet::sheet_to_macro, r#macro::Macro};
@@ -49,7 +50,10 @@ fn load_song(file_path: &String) -> Option<Macro> {
         }
         "mid" | "midi" => {
 
-            midi_to_macro(fs::read(file_path).unwrap())
+            let bytes = fs::read(file_path).unwrap();
+            let midi = Smf::parse(&bytes).unwrap();
+
+            midi_to_macro(midi)
 
         }
         _ => None

@@ -14,6 +14,7 @@ I hope if theres something so stupid someone makes a pr to make it less stupid a
         * Extract song name from midi if there is any.
         * Extract description from midi if there is any.
         * Extract URL from midi if there is any.
+            * Will have to swap what midi crate we are using because midly has no way of reading those.
     * Figure out github actions to auto build the project
     * Add icon to exe
         * (I have fought hard and long, gave up and failed. I do not want to install 5gb of extra stuff just to get icons to work.)
